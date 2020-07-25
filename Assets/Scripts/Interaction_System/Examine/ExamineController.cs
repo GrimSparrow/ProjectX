@@ -54,12 +54,6 @@ public class ExamineController : MonoBehaviour
             StopExamining();
             examineObject.Use();
         }
-
-        if (Input.GetKey(KeyCode.F) && examineObject != null && isExamine)
-        {
-            examineObject.Use();
-            StopExamining();
-        }
         isDragged = Input.GetMouseButton(0);
     }
     public void Examine(ExaminableBase examine)
