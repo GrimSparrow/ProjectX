@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using ProjectX;
+using TMPro;
 using UnityEngine;
 
 public class ExamineController : MonoBehaviour
@@ -9,11 +7,13 @@ public class ExamineController : MonoBehaviour
     private Vector3 posLatFrame;
     [SerializeField] private float speed = 100f;
    
-    private GameObject examineObject = null;
-    private bool isDragged;
     private bool isExamine;
-    [SerializeField]private Canvas ExamineCanvas;
-    [SerializeField] private GameObject slot;
+    
+    private bool isDragged;
+    
+    [SerializeField] private Canvas ExamineCanvas;
+    [SerializeField] private TextMeshProUGUI ObjectName;
+    [SerializeField] private InteractionUIPanel InteractionUiPanel;
 
     private static  ExamineController instance;
     
@@ -22,6 +22,8 @@ public class ExamineController : MonoBehaviour
         get => instance;
         set => instance = value;
     }
+    
+    private ExaminableBase examineObject;
 
     public bool IsExamine
     {
@@ -50,48 +52,37 @@ public class ExamineController : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             StopExamining();
+            examineObject.Use();
         }
 
+        if (Input.GetKey(KeyCode.F) && examineObject != null && isExamine)
+        {
+            examineObject.Use();
+            StopExamining();
+        }
         isDragged = Input.GetMouseButton(0);
     }
-    public void Examine(InteractableBase interactable)
+    public void Examine(ExaminableBase examine)
     {
-        var obj = interactable.gameObject;
-        if (obj == null) return;
-        examineObject =  Instantiate(obj, Vector3.zero, obj.transform.rotation);
-        var collider = examineObject.GetComponent<Collider>();
-        var rigid = examineObject.GetComponent<Rigidbody>();
-        if (collider != null )
-        {
-            collider.enabled = false;
-        }
-        if (rigid != null )
-        {
-            Destroy(rigid);
-        }
-        
+        examineObject = examine;
+        ChangeCursorState(true);
         examineObject.transform.parent = ExamineCanvas.transform;
         examineObject.transform.localPosition = Vector3.zero;
-
-        examineObject.transform.Rotate(Vector3.zero);
-        ChangeCursorState(true);
+        examineObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        ObjectName.text = examine.ObjectName;
     }
 
     public void StopExamining()
     {
         if (examineObject == null) return;
-        Destroy(examineObject);
+        Destroy(examineObject.gameObject);
         ChangeCursorState(false);
     }
     private void FixedUpdate()
     {
         if (examineObject == null || !isDragged) return;
         
-        float rotX = Input.GetAxis("Mouse X") * speed * Mathf.Deg2Rad;
-        float rotY = Input.GetAxis("Mouse Y") * speed * Mathf.Deg2Rad;
-        
-        examineObject.transform.RotateAround(Vector3.up, -rotX);
-        examineObject.transform.RotateAround(Vector3.right, rotY);
+        examineObject.Drag(speed);
     }
 
     void ChangeCursorState(bool isActive)
@@ -99,5 +90,7 @@ public class ExamineController : MonoBehaviour
         Cursor.lockState = isActive ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = isActive;
         IsExamine = isActive;
+        ExamineCanvas.gameObject.SetActive(isActive);
+        InteractionUiPanel.SetVisibility(!isActive);
     }
 }

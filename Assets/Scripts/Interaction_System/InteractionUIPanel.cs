@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -10,6 +8,7 @@ namespace ProjectX
     {
         [SerializeField] private Image progressBar;
         [SerializeField] private TextMeshProUGUI tooltipText;
+        [SerializeField] private GameObject Crosshair;
 
         public void SetTooltip(string tooltip)
         {
@@ -25,6 +24,12 @@ namespace ProjectX
         {
             progressBar.fillAmount = 0f;
             tooltipText.SetText("");
+        }
+
+        public void SetVisibility(bool isActive)
+        {
+            gameObject.SetActive(isActive);
+            Crosshair.SetActive(isActive);
         }
     }
 }

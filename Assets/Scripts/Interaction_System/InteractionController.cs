@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ProjectX
 {    
@@ -38,8 +36,11 @@ namespace ProjectX
 
             void Update()
             {
-                CheckForInteractable();
-                CheckForInteractableInput();
+                if (!ExamineController.Instance.IsExamine)
+                {
+                    CheckForInteractable();
+                    CheckForInteractableInput();
+                }
             }
         #endregion
 

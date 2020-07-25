@@ -460,8 +460,15 @@
             <e p="InputHandler.cs" t="Include" />
           </e>
           <e p="Interaction_System" t="Include">
+            <e p="Examinables" t="Include">
+              <e p="ExaminableBase.cs" t="Include" />
+              <e p="NoteExaminable.cs" t="Include" />
+              <e p="PickExaminable.cs" t="Include" />
+              <e p="SimpleExaminable.cs" t="Include" />
+            </e>
             <e p="Examine" t="Include">
               <e p="ExamineController.cs" t="Include" />
+              <e p="IExaminable.cs" t="Include" />
             </e>
             <e p="Hoverable.cs" t="Include" />
             <e p="IHoverable.cs" t="Include" />
@@ -469,7 +476,6 @@
             <e p="InteractableBase.cs" t="Include" />
             <e p="Interactables" t="Include">
               <e p="DestroyInteractable.cs" t="Include" />
-              <e p="ExamineInteractable.cs" t="Include" />
             </e>
             <e p="InteractionController.cs" t="Include" />
             <e p="InteractionData.cs" t="Include" />

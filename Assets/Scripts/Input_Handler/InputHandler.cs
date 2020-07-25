@@ -1,5 +1,4 @@
 using UnityEngine;
-using NaughtyAttributes;
 
 namespace ProjectX
 {    
@@ -26,8 +25,14 @@ namespace ProjectX
                 {
                     GetCameraInput();
                     GetMovementInputData();
+                    GetInteractionInputData();
                 }
-                GetInteractionInputData();
+                else
+                {
+                    cameraInputData.ResetInput();
+                    movementInputData.ResetInput();
+                    interactionInputData.ResetInput();
+                }
             }
         #endregion
 
