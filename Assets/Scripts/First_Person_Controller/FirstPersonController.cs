@@ -371,7 +371,7 @@ namespace ProjectX
                         InvokeCrouchRoutine();
                 }
                 
-                protected virtual void InvokeCrouchRoutine()
+                public virtual void InvokeCrouchRoutine()
                 {
                     if(movementInputData.IsCrouching)
                         if(CheckIfRoof()) return;
