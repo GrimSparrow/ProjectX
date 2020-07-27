@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 4052880992686476099}
   - component: {fileID: 9146370602791136318}
   - component: {fileID: 5101985139692353402}
-  - component: {fileID: 7192632}
-  - component: {fileID: 7192631}
   - component: {fileID: 6530214346746873676}
   - component: {fileID: 7192633}
+  - component: {fileID: 1691956828}
+  - component: {fileID: 1691956827}
+  - component: {fileID: 1691956835}
   m_Layer: 10
   m_Name: Book
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 5009712891332560641}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.2749448, y: 0.84706104, z: -0.436}
-  m_LocalScale: {x: 0.39353, y: -0.07005, z: 0.21627113}
+  m_LocalScale: {x: 0.39353, y: -0.8591633, z: 0.21627113}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -99,41 +100,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7192632
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5009712891332560641}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &7192631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5009712891332560641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71c4c955e77ef1a499fec28642266e40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  holdInteract: 0
-  holdDuration: 1
-  multipleUse: 0
-  isInteractable: 1
-  tooltipMessage: "\u041F\u043E\u0434\u043E\u0431\u0440\u0430\u0442\u044C"
-  objectName: "\u041A\u043D\u0438\u0433\u0430 \u0421\u0432\u044F\u0442\u043E\u0437\u0430\u0440\u0430
-    \u0417\u0430\u0441\u043B\u0430\u0432\u0441\u043A\u043E\u0433\u043E"
 --- !u!114 &6530214346746873676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,10 +118,58 @@ MonoBehaviour:
   cachedSaveableComponents:
   - identifier: SaveTransform-e6a99
     monoBehaviour: {fileID: 7192633}
+  - identifier: SaveTransform-34611
+    monoBehaviour: {fileID: 1691956835}
   saveIdentification: 
   container: {fileID: 11400000, guid: 57e7fc31dde372c4cae5f1545dc86049, type: 2}
   sceneName: 
 --- !u!114 &7192633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009712891332560641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25ac1323f06ac7f4588374fc95b1e3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &1691956828
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009712891332560641}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &1691956827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009712891332560641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24bbb95d3f65b95429cfc13aaaabcb15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdInteract: 0
+  holdDuration: 1
+  multipleUse: 0
+  isInteractable: 1
+  tooltipMessage: interact
+  objectName: "\u0428\u043B\u0430\u043A\u043E\u0431\u043B\u043E\u043A"
+--- !u!114 &1691956835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -10,7 +10,6 @@ namespace Lowscope.Saving.Components
     /// </summary>
     [DisallowMultipleComponent, DefaultExecutionOrder(-9001)]
     [AddComponentMenu("Saving/Saveable")]
-    [RequireComponent(typeof(SaveTransform))]
     public class Saveable : MonoBehaviour
     {
         [Header("Save configuration")]

@@ -1,10 +1,20 @@
+using Lowscope.Saving.Components;
 using UnityEngine;
 
-public class PickExaminable : ExaminableBase
+public class ExaminableItem : ExaminableBase
 {
+    public int maxCount;
+    public string description;
+    public string itemName;
+    public Sprite icon;
     public override void Use()
     {
-        Debug.Log($"{ObjectName} is picked up");
+        var container = GetComponent<Saveable>();
+        if (container != null)
+        {
+            InventoryController.Instance.AddItem(container);
+        }
+        
     }
 
     public override ExaminableBase Prepare()

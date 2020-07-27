@@ -257,6 +257,7 @@
     </e>
     <e p="C:\Unity_projects\Git\ProjectX" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.Player.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -278,50 +279,6 @@
                 <e p="DOTweenModuleUtils.cs" t="Include" />
               </e>
               <e p="readme.txt" t="Include" />
-            </e>
-          </e>
-          <e p="Lowscope" t="Include">
-            <e p="ComponentSaveSystem" t="Include">
-              <e p="Components" t="Include">
-                <e p="AssetDatabase.cs" t="Include" />
-                <e p="PrefabSourceContainer.cs" t="Include" />
-                <e p="Saveable.cs" t="Include" />
-                <e p="SavePosition.cs" t="Include" />
-                <e p="SaveRotation.cs" t="Include" />
-                <e p="SaveScale.cs" t="Include" />
-                <e p="SaveTransform.cs" t="Include" />
-                <e p="SaveVisibility.cs" t="Include" />
-              </e>
-              <e p="Core" t="Include">
-                <e p="SavedInstance.cs" t="Include" />
-                <e p="SaveFileUtility.cs" t="Include" />
-                <e p="SaveInstanceManager.cs" t="Include" />
-              </e>
-              <e p="Data" t="Include">
-                <e p="SaveGame.cs" t="Include" />
-                <e p="SaveSettings.cs" t="Include" />
-              </e>
-              <e p="Demo" t="Include">
-                <e p="Tests" t="Include">
-                  <e p="SaveSpeedTest.cs" t="Include" />
-                </e>
-              </e>
-              <e p="Editor" t="Include">
-                <e p="SaveableInspector.cs" t="Include" />
-                <e p="SaveMenuCommands.cs" t="Include" />
-              </e>
-              <e p="Enums" t="Include">
-                <e p="InstanceSource.cs" t="Include" />
-              </e>
-              <e p="Interfaces" t="Include">
-                <e p="ISaveable.cs" t="Include" />
-              </e>
-              <e p="LICENSE.txt" t="Include" />
-              <e p="ResourcesManager.cs" t="Include" />
-              <e p="SaveMaster.cs" t="Include" />
-            </e>
-            <e p="ValidateHierarchy" t="Include">
-              <e p="ValidateHierarchy.cs" t="Include" />
             </e>
           </e>
           <e p="NaughtyAttributes" t="Include">
@@ -509,8 +466,8 @@
           <e p="Interaction_System" t="Include">
             <e p="Examinables" t="Include">
               <e p="ExaminableBase.cs" t="Include" />
+              <e p="ExaminableItem.cs" t="Include" />
               <e p="NoteExaminable.cs" t="Include" />
-              <e p="PickExaminable.cs" t="Include" />
               <e p="SimpleExaminable.cs" t="Include" />
             </e>
             <e p="Examine" t="Include">
@@ -530,6 +487,55 @@
             <e p="InteractionUIPanel.cs" t="Include" />
             <e p="IPickable.cs" t="Include" />
             <e p="Pickable.cs" t="Include" />
+          </e>
+          <e p="Inventory" t="Include">
+            <e p="IItemHandler.cs" t="Include" />
+            <e p="InventoryController.cs" t="Include" />
+          </e>
+          <e p="Lowscope" t="Include">
+            <e p="ComponentSaveSystem" t="Include">
+              <e p="Components" t="Include">
+                <e p="AssetDatabase.cs" t="Include" />
+                <e p="PrefabSourceContainer.cs" t="Include" />
+                <e p="Saveable.cs" t="Include" />
+                <e p="SavePlayerState.cs" t="Include" />
+                <e p="SavePosition.cs" t="Include" />
+                <e p="SaveRotation.cs" t="Include" />
+                <e p="SaveScale.cs" t="Include" />
+                <e p="SaveTransform.cs" t="Include" />
+                <e p="SaveVisibility.cs" t="Include" />
+              </e>
+              <e p="Core" t="Include">
+                <e p="SavedInstance.cs" t="Include" />
+                <e p="SaveFileUtility.cs" t="Include" />
+                <e p="SaveInstanceManager.cs" t="Include" />
+              </e>
+              <e p="Data" t="Include">
+                <e p="SaveGame.cs" t="Include" />
+                <e p="SaveSettings.cs" t="Include" />
+              </e>
+              <e p="Demo" t="Include">
+                <e p="Tests" t="Include">
+                  <e p="SaveSpeedTest.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Editor" t="Include">
+                <e p="SaveableInspector.cs" t="Include" />
+                <e p="SaveMenuCommands.cs" t="Include" />
+              </e>
+              <e p="Enums" t="Include">
+                <e p="InstanceSource.cs" t="Include" />
+              </e>
+              <e p="Interfaces" t="Include">
+                <e p="ISaveable.cs" t="Include" />
+              </e>
+              <e p="LICENSE.txt" t="Include" />
+              <e p="ResourcesManager.cs" t="Include" />
+              <e p="SaveMaster.cs" t="Include" />
+            </e>
+            <e p="ValidateHierarchy" t="Include">
+              <e p="ValidateHierarchy.cs" t="Include" />
+            </e>
           </e>
           <e p="Perlin_Noise_Scroller" t="Include">
             <e p="PerlinNoiseScroller.cs" t="Include" />

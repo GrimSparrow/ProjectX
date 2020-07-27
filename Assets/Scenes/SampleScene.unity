@@ -18842,12 +18842,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 276858319, guid: b2a0df894ff4e104094394ec3de0a9b2, type: 3}
+      propertyPath: cachedSaveableComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 276858319, guid: b2a0df894ff4e104094394ec3de0a9b2, type: 3}
       propertyPath: saveIdentification
       value: SampleScene-P_First_Person_Controller-b84c9
       objectReference: {fileID: 0}
     - target: {fileID: 276858319, guid: b2a0df894ff4e104094394ec3de0a9b2, type: 3}
       propertyPath: sceneName
       value: SampleScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 276858319, guid: b2a0df894ff4e104094394ec3de0a9b2, type: 3}
+      propertyPath: cachedSaveableComponents.Array.data[1].identifier
+      value: SavePlayerState-0b45e
+      objectReference: {fileID: 0}
+    - target: {fileID: 276858319, guid: b2a0df894ff4e104094394ec3de0a9b2, type: 3}
+      propertyPath: cachedSaveableComponents.Array.data[1].monoBehaviour
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3843716870331872631, guid: b2a0df894ff4e104094394ec3de0a9b2,
         type: 3}
