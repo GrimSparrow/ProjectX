@@ -7,6 +7,13 @@ namespace ProjectX
     [RequireComponent(typeof(CharacterController))]
     public class FirstPersonController : MonoBehaviour
     {
+        public AudioSource m_AudioSource;
+        public GroundType groundType;
+        [SerializeField] [Range(0f, 1f)] private float m_RunstepLenghten;
+        [SerializeField] private float m_StepInterval;
+        
+        private float m_StepCycle;
+        private float m_NextStep;
         #region Variables
             #region Private Serialized     
                 #region Data
@@ -88,7 +95,7 @@ namespace ProjectX
                     private Transform m_yawTransform;
                     private Transform m_camTransform;
                     private HeadBob m_headBob;
-                    private CameraController m_cameraController;
+                    private LookAroundController m_cameraController;
                     
                     private RaycastHit m_hitInfo;
                     private IEnumerator m_CrouchRoutine;
@@ -150,7 +157,7 @@ namespace ProjectX
             protected virtual void Update()
             {
                 if(m_yawTransform != null)
-                    RotateTowardsCamera();
+                    //RotateTowardsCamera();
 
                 if(m_characterController)
                 {
@@ -182,6 +189,7 @@ namespace ProjectX
                     ApplyMovement();
 
                     m_previouslyGrounded = m_isGrounded;
+                    ProgressStepCycle();
                 }
             }
 
@@ -202,7 +210,7 @@ namespace ProjectX
                 protected virtual void GetComponents()
                 {
                     m_characterController = GetComponent<CharacterController>();
-                    m_cameraController = GetComponentInChildren<CameraController>();
+                    m_cameraController = GetComponentInChildren<LookAroundController>();
                     m_yawTransform = m_cameraController.transform;
                     m_camTransform = GetComponentInChildren<Camera>().transform;
                     m_headBob = new HeadBob(headBobData, moveBackwardsSpeedPercent, moveSideSpeedPercent);
@@ -455,7 +463,7 @@ namespace ProjectX
                     float _initLandHeight = _localPos.y;
 
                     _landAmount = m_inAirTimer > landTimer ? highLandAmount : lowLandAmount;
-
+                    PlayLandingSound();
                     while(_percent < 1f)
                     {
                         _percent += Time.deltaTime * _speed;
@@ -466,6 +474,7 @@ namespace ProjectX
 
                         yield return null;
                     }
+                    
                 }
             #endregion
 
@@ -479,7 +488,7 @@ namespace ProjectX
                         if(!m_duringCrouchAnimation) // we want to make our head bob only if we are moving and not during crouch routine
                         {
                             m_headBob.ScrollHeadBob(movementInputData.IsRunning && CanRun(),movementInputData.IsCrouching, movementInputData.InputVector);
-                            //m_yawTransform.localPosition = Vector3.Lerp(m_yawTransform.localPosition,(Vector3.up * m_headBob.CurrentStateHeight) + m_headBob.FinalOffset,Time.deltaTime * smoothHeadBobSpeed);
+                            m_yawTransform.localPosition = Vector3.Lerp(m_yawTransform.localPosition,(Vector3.up * m_headBob.CurrentStateHeight) + m_headBob.FinalOffset,Time.deltaTime * smoothHeadBobSpeed);
                         }
                     }
                     else // if we are not moving or we are not grounded
@@ -489,16 +498,16 @@ namespace ProjectX
                             m_headBob.ResetHeadBob();
                         }
 
-                        //if(!m_duringCrouchAnimation) // we want to reset our head bob only if we are standing still and not during crouch routine
-                            //m_yawTransform.localPosition = Vector3.Lerp(m_yawTransform.localPosition,new Vector3(0f,m_headBob.CurrentStateHeight,0f),Time.deltaTime * smoothHeadBobSpeed);
+                        if(!m_duringCrouchAnimation) // we want to reset our head bob only if we are standing still and not during crouch routine
+                            m_yawTransform.localPosition = Vector3.Lerp(m_yawTransform.localPosition,new Vector3(0f,m_headBob.CurrentStateHeight,0f),Time.deltaTime * smoothHeadBobSpeed);
                     }
 
-                    //m_camTransform.localPosition = Vector3.Lerp(m_camTransform.localPosition,m_headBob.FinalOffset,Time.deltaTime * smoothHeadBobSpeed);
+                    m_camTransform.localPosition = Vector3.Lerp(m_camTransform.localPosition,m_headBob.FinalOffset,Time.deltaTime * smoothHeadBobSpeed);
                 }
 
                 protected virtual void HandleCameraSway()
                 {
-                    m_cameraController.HandleSway(m_smoothInputVector,movementInputData.InputVector.x);
+                   // m_cameraController.HandleSway(m_smoothInputVector,movementInputData.InputVector.x);
                 }
 
                 protected virtual void HandleRunFOV()
@@ -508,13 +517,13 @@ namespace ProjectX
                         if(movementInputData.RunClicked && CanRun())
                         {
                             m_duringRunAnimation = true;
-                            m_cameraController.ChangeRunFOV(false);
+                           // m_cameraController.ChangeRunFOV(false);
                         }
 
                         if(movementInputData.IsRunning && CanRun() && !m_duringRunAnimation )
                         {
                             m_duringRunAnimation = true;
-                            m_cameraController.ChangeRunFOV(false);
+                            //m_cameraController.ChangeRunFOV(false);
                         }
                     }
 
@@ -523,7 +532,7 @@ namespace ProjectX
                         if(m_duringRunAnimation)
                         {
                             m_duringRunAnimation = false;
-                            m_cameraController.ChangeRunFOV(true);
+                           // m_cameraController.ChangeRunFOV(true);
                         }
                     }
                 }
@@ -536,6 +545,7 @@ namespace ProjectX
                     
                         m_previouslyGrounded = true;
                         m_isGrounded = false;
+                        PlayJumpSound();
                     }
                 }
                 protected virtual void ApplyGravity()
@@ -564,9 +574,63 @@ namespace ProjectX
                     Quaternion _currentRot = transform.rotation;
                     Quaternion _desiredRot = m_yawTransform.rotation;
 
-                    transform.rotation = Quaternion.Slerp(_currentRot,_desiredRot,Time.deltaTime * smoothRotateSpeed);
+                    //transform.LookAt(m_yawTransform, transform.up);
+                    //transform.rotation = m_yawTransform.rotation;
+                    transform.rotation = Quaternion.Slerp(_currentRot,_desiredRot,Time.time * smoothRotateSpeed);
                 }
             #endregion
+            
+            
+            private void PlayJumpSound()
+            {
+                m_AudioSource.clip = groundType.m_JumpSound;
+                m_AudioSource.Play();
+            }
+            
+            private void PlayLandingSound()
+            {
+                m_AudioSource.clip = groundType.m_LandSound;
+                m_AudioSource.Play();
+            }
+            
+            private void ProgressStepCycle()
+            {
+                if (m_characterController.velocity.sqrMagnitude > 0 && (movementInputData.InputVector.x != 0 || movementInputData.InputVector.y != 0))
+                {
+                    var speedde = movementInputData.IsRunning
+                        ? runSpeed
+                        : movementInputData.IsCrouching
+                            ? 5
+                            : walkSpeed; 
+                    m_StepCycle += (m_characterController.velocity.magnitude + (speedde*(m_RunstepLenghten)))*
+                                   Time.deltaTime;
+                }
+
+                if (!(m_StepCycle > m_NextStep))
+                {
+                    return;
+                }
+
+                m_NextStep = m_StepCycle + m_StepInterval;
+
+                PlayFootStepAudio();
+            }
+            
+            private void PlayFootStepAudio()
+            {
+                if (!m_isGrounded)
+                {
+                    return;
+                }
+                // pick & play a random footstep sound from the array,
+                // excluding sound at index 0
+                int n = Random.Range(1, groundType.m_FootstepSounds.Length);
+                m_AudioSource.clip = groundType.m_FootstepSounds[n];
+                m_AudioSource.PlayOneShot(m_AudioSource.clip);
+                // move picked sound to index 0 so it's not picked next time
+                groundType.m_FootstepSounds[n] = groundType.m_FootstepSounds[0];
+                groundType.m_FootstepSounds[0] = m_AudioSource.clip;
+            }
         #endregion
     }
 }

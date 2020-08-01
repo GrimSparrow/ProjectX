@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace ProjectX
 {    
@@ -9,6 +10,7 @@ namespace ProjectX
             [SerializeField] private CameraInputData cameraInputData = null;
             [SerializeField] private MovementInputData movementInputData = null;
             [SerializeField] private InteractionInputData interactionInputData = null;
+            [SerializeField] private Joystick moveJoy;
         #endregion
 
         #region BuiltIn Methods
@@ -39,14 +41,15 @@ namespace ProjectX
         #region Custom Methods
             void GetInteractionInputData()
             {
-                interactionInputData.InteractedClicked = Input.GetKeyDown(KeyCode.E);
-                interactionInputData.InteractedReleased = Input.GetKeyUp(KeyCode.E);
+                interactionInputData.InteractedClicked = CrossPlatformInputManager.GetButtonDown("Use");
+                interactionInputData.InteractedReleased = CrossPlatformInputManager.GetButtonUp("Use");
             }
 
             void GetCameraInput()
             {
-                cameraInputData.InputVectorX = Input.GetAxis("Mouse X");
-                cameraInputData.InputVectorY = Input.GetAxis("Mouse Y");
+                cameraInputData.InputVectorX = CrossPlatformInputManager.GetAxisRaw("Mouse X");
+                cameraInputData.InputVectorY = CrossPlatformInputManager.GetAxisRaw("Mouse Y");
+                
 
                 cameraInputData.ZoomClicked = Input.GetMouseButtonDown(1);
                 cameraInputData.ZoomReleased = Input.GetMouseButtonUp(1);
@@ -54,8 +57,8 @@ namespace ProjectX
 
             void GetMovementInputData()
             {
-                movementInputData.InputVectorX = Input.GetAxisRaw("Horizontal");
-                movementInputData.InputVectorY = Input.GetAxisRaw("Vertical");
+                movementInputData.InputVectorX = moveJoy.Horizontal;
+                movementInputData.InputVectorY = moveJoy.Vertical;
 
                 movementInputData.RunClicked = Input.GetKeyDown(KeyCode.LeftShift);
                 movementInputData.RunReleased = Input.GetKeyUp(KeyCode.LeftShift);
@@ -66,8 +69,8 @@ namespace ProjectX
                 if(movementInputData.RunReleased)
                     movementInputData.IsRunning = false;
 
-                movementInputData.JumpClicked = Input.GetKeyDown(KeyCode.Space);
-                movementInputData.CrouchClicked = Input.GetKeyDown(KeyCode.LeftControl);
+                movementInputData.JumpClicked = CrossPlatformInputManager.GetButtonDown("Jump");
+                movementInputData.CrouchClicked = CrossPlatformInputManager.GetButtonDown("Crouch");
             }
         #endregion
     }
