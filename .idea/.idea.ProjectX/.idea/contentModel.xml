@@ -267,6 +267,7 @@
           <e p="BranchNodeEditor.cs" t="Include" />
           <e p="EventNodeEditor.cs" t="Include" />
           <e p="QuestEditor.cs" t="Include" />
+          <e p="TaskNodeEditor.cs" t="Include" />
         </e>
         <e p="JsonDotNet" t="Include">
           <e p="link.xml" t="Include" />
@@ -1601,7 +1602,6 @@
             <e p="QuestController.cs" t="Include" />
             <e p="TaskBaseNode.cs" t="Include" />
             <e p="TaskNode.cs" t="Include" />
-            <e p="TaskNodeEditor.cs" t="Include" />
           </e>
           <e p="Scriptable_Objects" t="Include">
             <e p="CameraInputData.cs" t="Include" />

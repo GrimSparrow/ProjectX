@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f17a71d163146b34fa25ab4a7d5749a6, type: 3}
   m_Name: MovementInputData
   m_EditorClassIdentifier: 
-  isMobile: 1
+  isMobile: 0

@@ -49,6 +49,9 @@ public class LookAroundController : MonoBehaviour
             //Debug.Log("Rotating");
             LookAround();
         } 
+        if (leftFingerId != -1)
+        {
+        }
     }
 
 

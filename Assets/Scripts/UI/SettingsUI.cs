@@ -23,10 +23,12 @@ public class SettingsUI : MonoBehaviour
     {
         SettingsManager.SetSettings(dropdown.value);
         gameSettings.QualitySettings = dropdown.value;
+        gameSettings.SetDirty();
     }
 
     public void SetLookSensitivity(Slider slider)
     {
         gameSettings.LookSensitivity = slider.value;
+        gameSettings.SetDirty();
     }
 }
