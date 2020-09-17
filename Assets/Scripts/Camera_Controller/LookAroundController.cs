@@ -6,10 +6,8 @@ public class LookAroundController : MonoBehaviour
     [Header("First person camera")]
     public Transform fpCameraTransform;
     [Space(20)]
-
-    // Player settings
-    [Header("Settings")]
-    public float cameraSensitivity;
+    [Header("Game Settings")]
+    [SerializeField] private GameSettings gameSettings;
 
     [SerializeField] private FirstPersonController fpc;
 
@@ -34,10 +32,14 @@ public class LookAroundController : MonoBehaviour
         // only calculate once
         halfScreenWidth = Screen.width / 2;
     }
-
+    float   MyAngle = 0F;
     // Update is called once per frame
     void Update()
     {
+        if (ExamineController.Instance.IsExamine)
+        {
+            return;
+        }
         // Handles input
         GetTouchInput();
 
@@ -46,11 +48,7 @@ public class LookAroundController : MonoBehaviour
             // Ony look around if the right finger is being tracked
             //Debug.Log("Rotating");
             LookAround();
-        }
-
-        if (leftFingerId != -1)
-        {
-        }
+        } 
     }
 
 
@@ -101,7 +99,7 @@ public class LookAroundController : MonoBehaviour
                     // Get input for looking around
                     if (t.fingerId == rightFingerId)
                     {
-                        lookInput = t.deltaPosition * cameraSensitivity * Time.deltaTime;
+                        lookInput = t.deltaPosition * gameSettings.LookSensitivity/3 * Time.deltaTime;
                     }
                     else if (t.fingerId == leftFingerId) {
 
@@ -122,11 +120,8 @@ public class LookAroundController : MonoBehaviour
 
     void LookAround()
     {
-        // vertical (pitch) rotation is applied to the first person camera
-        cameraPitch = Mathf.Clamp(cameraPitch - lookInput.y, -90f, 90f);
-        fpCameraTransform.localRotation = Quaternion.Euler(cameraPitch, 0, 0);
-        // horizontal (yaw) rotation
-        //transform.Rotate(transform.up, lookInput.x);
-        fpc.transform.Rotate(transform.up, lookInput.x);
+            cameraPitch = Mathf.Clamp(cameraPitch - lookInput.y, -90f, 90f);
+            fpCameraTransform.localRotation = Quaternion.Euler(cameraPitch, 0, 0);
+            fpc.transform.Rotate(transform.up, lookInput.x);
     }
 }

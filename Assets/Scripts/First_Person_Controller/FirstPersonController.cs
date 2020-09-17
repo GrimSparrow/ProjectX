@@ -96,6 +96,7 @@ namespace ProjectX
                     private Transform m_camTransform;
                     private HeadBob m_headBob;
                     private LookAroundController m_cameraController;
+                    private CameraController cameraController;
                     
                     private RaycastHit m_hitInfo;
                     private IEnumerator m_CrouchRoutine;
@@ -156,8 +157,8 @@ namespace ProjectX
 
             protected virtual void Update()
             {
-                if(m_yawTransform != null)
-                    //RotateTowardsCamera();
+                if(m_yawTransform != null && !movementInputData.IsMobile)
+                    RotateTowardsCamera();
 
                 if(m_characterController)
                 {
@@ -211,7 +212,8 @@ namespace ProjectX
                 {
                     m_characterController = GetComponent<CharacterController>();
                     m_cameraController = GetComponentInChildren<LookAroundController>();
-                    m_yawTransform = m_cameraController.transform;
+                    cameraController = GetComponentInChildren<CameraController>();
+                    m_yawTransform = movementInputData.IsMobile ? m_cameraController.transform : cameraController.transform;
                     m_camTransform = GetComponentInChildren<Camera>().transform;
                     m_headBob = new HeadBob(headBobData, moveBackwardsSpeedPercent, moveSideSpeedPercent);
                 }

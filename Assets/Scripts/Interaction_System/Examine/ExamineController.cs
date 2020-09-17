@@ -1,6 +1,9 @@
+using System;
 using ProjectX;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class ExamineController : MonoBehaviour
 {
@@ -13,7 +16,8 @@ public class ExamineController : MonoBehaviour
     
     [SerializeField] private Canvas ExamineCanvas;
     [SerializeField] private TextMeshProUGUI ObjectName;
-    [SerializeField] private InteractionUIPanel InteractionUiPanel;
+    [SerializeField] private GameObject NoteContainer;
+     private InteractionUIPanel InteractionUiPanel;
 
     private static  ExamineController instance;
     
@@ -44,33 +48,36 @@ public class ExamineController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-  
-    
-    // Update is called once per frame
-    void Update () {
 
-        if (Input.GetKey(KeyCode.Escape) && isExamine)
+    // Update is called once per frame
+    void LateUpdate () {
+
+        if (Input.GetKey(KeyCode.Escape) || CrossPlatformInputManager.GetButtonDown("Use") && isExamine)
         {
             StopExamining();
-            examineObject.Use();
         }
         isDragged = Input.GetMouseButton(0);
     }
     public void Examine(ExaminableBase examine)
     {
+        var cam = GetComponent<Canvas>();
+        cam.worldCamera = Camera.main;
+        
         examineObject = examine;
         ChangeCursorState(true);
         examineObject.transform.parent = ExamineCanvas.transform;
         examineObject.transform.localPosition = Vector3.zero;
-        examineObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        //examineObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
         ObjectName.text = examine.ObjectName;
+        examineObject.Use();
     }
 
     public void StopExamining()
     {
+        NoteContainer.gameObject.SetActive(false);
+        ChangeCursorState(false);
         if (examineObject == null) return;
         Destroy(examineObject.gameObject);
-        ChangeCursorState(false);
     }
     private void FixedUpdate()
     {
@@ -81,10 +88,21 @@ public class ExamineController : MonoBehaviour
 
     void ChangeCursorState(bool isActive)
     {
-        Cursor.lockState = isActive ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = isActive;
+        //Cursor.lockState = isActive ? CursorLockMode.None : CursorLockMode.Locked;
+        //Cursor.visible = isActive;
         IsExamine = isActive;
-        ExamineCanvas.gameObject.SetActive(isActive);
+        ObjectName.text = string.Empty;
+        InteractionUiPanel = FindObjectOfType<InteractionUIPanel>();
         InteractionUiPanel.SetVisibility(!isActive);
+    }
+
+    public void ShowNote(Note note)
+    {
+        ChangeCursorState(true);
+        NoteContainer.gameObject.SetActive(true);
+        var template = NoteContainer.GetComponent<Image>();
+        var text = NoteContainer.GetComponentInChildren<TextMeshProUGUI>();
+        template.sprite = note.Template;
+        text.SetText(note.Text);
     }
 }

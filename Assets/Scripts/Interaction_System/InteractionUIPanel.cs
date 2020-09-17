@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -7,12 +8,14 @@ namespace ProjectX
     public class InteractionUIPanel : MonoBehaviour
     {
         [SerializeField] private Image progressBar;
-        [SerializeField] private TextMeshProUGUI tooltipText;
         [SerializeField] private GameObject Crosshair;
+        private Sprite defaultCross;
+        private Image cross;
 
-        public void SetTooltip(string tooltip)
+        private void Start()
         {
-            tooltipText.SetText(tooltip);
+            defaultCross = Crosshair.GetComponent<Image>().sprite;
+            cross = Crosshair.GetComponent<Image>();
         }
 
         public void UpdateProgressBar(float fillAmount)
@@ -23,13 +26,18 @@ namespace ProjectX
         public void ResetUI()
         {
             progressBar.fillAmount = 0f;
-            tooltipText.SetText("");
+            SetCrosshair(defaultCross);
         }
 
         public void SetVisibility(bool isActive)
         {
-            gameObject.SetActive(isActive);
+            //gameObject.SetActive(isActive);
             Crosshair.SetActive(isActive);
+        }
+
+        public void SetCrosshair(Sprite crossImg)
+        {
+            cross.sprite = crossImg;
         }
     }
 }

@@ -5,34 +5,47 @@ namespace ProjectX
 {
     public class InteractableBase : MonoBehaviour, IInteractable
     {
-        #region Variables    
-            [Space,Header("Interactable Settings")]
+        #region Variables
 
-            [SerializeField] private bool holdInteract = true;
-            [ShowIf("holdInteract")][SerializeField] private float holdDuration = 1f;
+        [Space, Header("Quest Settings")] 
+        
+        public TaskBaseNode TaskToComplete;
             
-            [Space] 
-            [SerializeField] private bool multipleUse = false;
-            [SerializeField] private bool isInteractable = true;
+        [Space,Header("Interactable Settings")]
 
-            [SerializeField] private string tooltipMessage = "interact";
+        [SerializeField] private bool holdInteract = true;
+        [ShowIf("holdInteract")][SerializeField] private float holdDuration = 1f;
+        
+        [Space] 
+        [SerializeField] private bool multipleUse = false;
+        [SerializeField] private bool isInteractable = true;
+
+        [SerializeField] [TextArea] private string SayText;
         #endregion
 
         #region Properties    
-            public float HoldDuration => holdDuration; 
+        public float HoldDuration => holdDuration; 
 
-            public bool HoldInteract => holdInteract;
-            public bool MultipleUse => multipleUse;
-            public bool IsInteractable => isInteractable;
+        public bool HoldInteract => holdInteract;
+        public bool MultipleUse => multipleUse;
+        public bool IsInteractable
+        {
+            get => isInteractable;
+            set => isInteractable = value;
+        }
 
-            public string TooltipMessage => tooltipMessage;
         #endregion
 
         #region Methods
         public virtual void OnInteract()
             {
-                Debug.Log("INTERACTED: " + gameObject.name);
             }
+
+        public virtual void CantInteract()
+        {
+            NotificationManager.Instance.SetNotification(SayText);
+        }
+
         #endregion
     }
 }

@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "NewPrefabsSource", menuName = "Serialization/PrefabSource")]
 public class PrefabSourceContainer : ScriptableObject
@@ -15,6 +16,11 @@ public class PrefabSourceContainer : ScriptableObject
     public GameObject Prefab => _prefab;
     public string PrefabGuid => _guid;
     public string PathSourceContainer => _containerPath;
+    
+    public string Name;
+    [TextArea]
+    public string Description;
+    public Sprite picture;
 
 #if UNITY_EDITOR
     public void GenerateToolsProperties()

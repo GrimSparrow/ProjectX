@@ -118,7 +118,7 @@ MonoBehaviour:
   yAmplitude: 0.1
   xFrequency: 2
   yFrequency: 4
-  runAmplitudeMultiplier: 1.5
-  runFrequencyMultiplier: 1.5
+  runAmplitudeMultiplier: 1
+  runFrequencyMultiplier: 1
   crouchAmplitudeMultiplier: 0.4
   crouchFrequencyMultiplier: 0.8

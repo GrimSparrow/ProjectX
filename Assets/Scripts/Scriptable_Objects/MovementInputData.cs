@@ -16,6 +16,8 @@ namespace ProjectX
 
             bool m_runClicked;
             bool m_runReleased;
+
+            [SerializeField] private bool isMobile;
         #endregion
 
         #region Properties
@@ -66,7 +68,14 @@ namespace ProjectX
                 get => m_runReleased;
                 set => m_runReleased = value;
             }
-        #endregion
+
+            public bool IsMobile
+            {
+                get => isMobile;
+                set => isMobile = value;
+            }
+
+            #endregion
 
         #region Custom Methods
             public void ResetInput()

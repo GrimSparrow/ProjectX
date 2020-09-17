@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class ExaminableItem : ExaminableBase
 {
-    public int maxCount;
-    public string description;
-    public string itemName;
-    public Sprite icon;
     public override void Use()
     {
         var container = GetComponent<Saveable>();

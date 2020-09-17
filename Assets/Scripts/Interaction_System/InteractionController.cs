@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ProjectX
 {    
@@ -8,6 +9,7 @@ namespace ProjectX
             [Space, Header("Data")]
             [SerializeField] private InteractionInputData interactionInputData = null;
             [SerializeField] private InteractionData interactionData = null;
+            [SerializeField] private InteractionSprites interactionSprites;
 
             [Space, Header("UI")]
             [SerializeField] private InteractionUIPanel uiPanel;
@@ -62,14 +64,14 @@ namespace ProjectX
                         if(interactionData.IsEmpty())
                         {
                             interactionData.Interactable = _interactable;
-                            uiPanel.SetTooltip(_interactable.TooltipMessage);
+                            GetItemType(_interactable);
                         }
                         else
                         {
                             if(!interactionData.IsSameInteractable(_interactable))
                             {
                                 interactionData.Interactable = _interactable;
-                                uiPanel.SetTooltip(_interactable.TooltipMessage);
+                                GetItemType(_interactable);
                             }  
                         }
                     }
@@ -81,6 +83,57 @@ namespace ProjectX
                 }
 
                 Debug.DrawRay(_ray.origin,_ray.direction * rayDistance,_hitSomething ? Color.green : Color.red);
+            }
+
+            public enum CrosshairTypes
+            {
+                Default,
+                Take,
+                Examine
+            }
+
+            void  GetItemType(InteractableBase item)
+            {
+                if (!item.IsInteractable)
+                {
+                    SetCrosshair(CrosshairTypes.Default);
+                    return;
+                }
+                
+                switch (item)
+                {
+                    case SimpleExaminable _:
+                    case NoteExaminable _:
+                        SetCrosshair(CrosshairTypes.Examine);
+                        break;
+                    case ExaminableItem _:
+                    case DoorOpenInteractable _: 
+                    case RotateObject _:
+                        SetCrosshair(CrosshairTypes.Take);
+                        break;
+                    default:
+                        SetCrosshair(CrosshairTypes.Default);
+                        break;
+                }
+            }
+
+            void SetCrosshair(CrosshairTypes type)
+            {
+                switch (type)
+                {
+                    case CrosshairTypes.Default:
+                        uiPanel.SetCrosshair(interactionSprites.Sprites[0]);
+                        break;
+                    case CrosshairTypes.Take:
+                        uiPanel.SetCrosshair(interactionSprites.Sprites[1]);
+                        break;
+                    case CrosshairTypes.Examine:
+                        uiPanel.SetCrosshair(interactionSprites.Sprites[2]);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                }
+                
             }
 
             void CheckForInteractableInput()

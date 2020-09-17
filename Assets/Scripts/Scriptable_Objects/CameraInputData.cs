@@ -17,11 +17,13 @@ namespace ProjectX
             public Vector2 InputVector => m_inputVector;
             public float InputVectorX
             {
+                get => m_inputVector.x;
                 set => m_inputVector.x = value;
             }
 
             public float InputVectorY
             {
+                get => m_inputVector.y;
                 set => m_inputVector.y = value;
             }
 

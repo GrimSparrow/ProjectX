@@ -18,7 +18,7 @@ namespace ProjectX
 
             #region Settings
                 [Space,Header("Look Settings")]
-                [SerializeField] private Vector2 sensitivity = Vector2.zero;
+                [SerializeField] private GameSettings gameSettings;
                 [SerializeField] private Vector2 smoothAmount = Vector2.zero;
                 [SerializeField] [MinMaxSlider(-90f,90f)] private Vector2 lookAngleMinMax = Vector2.zero;
             #endregion
@@ -63,6 +63,10 @@ namespace ProjectX
                 m_cam = GetComponentInChildren<Camera>();
             }
 
+            public void Print()
+            {
+                Debug.Log("Clicked");
+            }
             void InitValues()
             {
                 m_yaw = transform.eulerAngles.y;
@@ -77,8 +81,8 @@ namespace ProjectX
 
             void CalculateRotation()
             {
-                m_desiredYaw += camInputData.InputVector.x * sensitivity.x * Time.deltaTime;
-                m_desiredPitch -= camInputData.InputVector.y * sensitivity.y * Time.deltaTime;
+                m_desiredYaw += camInputData.InputVector.x * gameSettings.LookSensitivity * Time.deltaTime;
+                m_desiredPitch -= camInputData.InputVector.y * gameSettings.LookSensitivity * Time.deltaTime;
 
                 m_desiredPitch = Mathf.Clamp(m_desiredPitch,lookAngleMinMax.x,lookAngleMinMax.y);
             }

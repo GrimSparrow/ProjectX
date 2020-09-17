@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Lowscope.Saving;
 using Lowscope.Saving.Components;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
+using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour, ISaveable
 {
@@ -27,17 +30,6 @@ public class InventoryController : MonoBehaviour, ISaveable
     {
         get => capacity;
         set => capacity = value;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.I))
-        {
-            foreach (var cell in cells)
-            {
-                Debug.Log($"{cell.guid} - {cell.prefabPath}\n");
-            }
-        }
     }
 
     private void Awake()
@@ -74,6 +66,25 @@ public class InventoryController : MonoBehaviour, ISaveable
         }
     }
 
+    public ItemCell GetItem(PrefabSourceContainer container)
+    {
+        return cells.FirstOrDefault(c => c.container == container);
+    }
+
+    public bool UseItem(PrefabSourceContainer container)
+    {
+        var item =  cells.FirstOrDefault(c => c.container == container);
+
+        if (item != null)
+        {
+            cells.Remove(item);
+            cells.Add(new ItemCell());
+            return true;
+        }
+
+        return false;
+    }
+
     public string OnSave()
     {
         return null;
@@ -93,6 +104,10 @@ public class InventoryController : MonoBehaviour, ISaveable
 [Serializable]
 public class ItemCell
 {
+    public bool isActive;
+    public string Name;
+    public string Description;
+    public Sprite Pic;
     public string prefabPath;
     public string guid;
     public PrefabSourceContainer container;
@@ -110,6 +125,10 @@ public class ItemCell
         prefabPath = item.container.PathSourceContainer;
         guid = item.SaveIdentification;
         container = item.container;
+
+        Name = item.container.Name;
+        Description = item.container.Description;
+        Pic = item.container.picture;
         return true;
     }
 }
